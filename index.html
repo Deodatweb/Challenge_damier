@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <!-- Le script placé dans le head crée toute la structure de la page. -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // 1) Création du titre "Damier"
+        const titre = document.createElement("h1");
+        titre.textContent = "Damier";
+        document.body.appendChild(titre);
+
+        // 2) Conteneur principal pour le damier (permet de centrer ou structurer)
+        const container = document.createElement("div");
+        container.id = "damier-container";
+        document.body.appendChild(container);
+
+        // 3) Création de la rangée des lettres (A–H)
+        const lettersRow = document.createElement("div");
+        lettersRow.id = "letters-row";
+        for (let i = 0; i < 8; i++) {
+          const letterCell = document.createElement("div");
+          letterCell.className = "letter-cell";
+          letterCell.textContent = String.fromCharCode(65 + i); // 'A' = 65
+          lettersRow.appendChild(letterCell);
+        }
+        container.appendChild(lettersRow);
+
+        // 4) Création du bloc englobant pour les lignes numérotées + damier
+        const rowsAndBoard = document.createElement("div");
+        rowsAndBoard.id = "rows-and-board";
+        container.appendChild(rowsAndBoard);
+
+        // 4a) Colonne de chiffres (1–8)
+        const numbersCol = document.createElement("div");
+        numbersCol.id = "numbers-col";
+        for (let i = 1; i <= 8; i++) {
+          const numberCell = document.createElement("div");
+          numberCell.className = "number-cell";
+          numberCell.textContent = i;
+          numbersCol.appendChild(numberCell);
+        }
+        rowsAndBoard.appendChild(numbersCol);
+
+        // 4b) Le damier (8 × 8)
+        const board = document.createElement("div");
+        board.id = "board";
+        rowsAndBoard.appendChild(board);
+
+        for (let row = 0; row < 8; row++) {
+          // Chaque ligne du damier
+          const rowDiv = document.createElement("div");
+          rowDiv.className = "board-row";
+          for (let col = 0; col < 8; col++) {
+            const square = document.createElement("div");
+            square.className = "board-square";
+            // On calcule la couleur en fonction de (row + col)
+            if ((row + col) % 2 === 0) {
+              square.classList.add("black-square");
+            } else {
+              square.classList.add("white-square");
+            }
+            rowDiv.appendChild(square);
+          }
+          board.appendChild(rowDiv);
+        }
+
+        // 5) Injection de toutes les règles CSS via une balise <style> créée en JS
+        const style = document.createElement("style");
+        style.textContent = `
+        /* Mise en forme générale */
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+        }
+        h1 {
+          margin-top: 20px;
+          margin-bottom: 20px;
+          font-size: 2em;
+        }
+        
+        /* Conteneur principal */
+        #damier-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        /* Rangée des lettres (A–H) */
+        #letters-row {
+          display: flex;
+          margin-bottom: 5px;
+        }
+        .letter-cell {
+          width: 40px;
+          text-align: center;
+          font-weight: bold;
+        }
+
+        /* Colonne des chiffres (1–8) + le damier */
+        #rows-and-board {
+          display: flex;
+        }
+        #numbers-col {
+          display: flex;
+          flex-direction: column;
+          margin-right: 5px;
+        }
+        .number-cell {
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+        }
+
+        /* Le damier lui-même */
+        #board {
+          display: flex;
+          flex-direction: column;
+          border: 2px solid black; 
+        }
+        .board-row {
+          display: flex;
+        }
+        .board-square {
+          width: 40px;
+          height: 40px;
+        }
+        .black-square {
+          background-color: black;
+        }
+        .white-square {
+          background-color: white;
+        }
+      `;
+        document.head.appendChild(style);
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Le body est vide : tout est créé dynamiquement par le script ci-dessus -->
+  </body>
+</html>
